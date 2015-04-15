@@ -1,0 +1,17 @@
+#! /bin/sh -e
+
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+
+. ${libdir}/grub/grub-mkconfig_lib
+
+# Check for custom ACPI files
+if [ -f "/boot/acpi/dsdt.aml" -a -f "/boot/acpi/facp.dat" ]; then
+	echo "Found custom ACPI tables" >&2
+        GRUB_CUSTOM_ACPI="(\$root)`make_system_path_relative_to_its_root /boot/acpi/dsdt.aml`"
+        GRUB_CUSTOM_ACPI="${GRUB_CUSTOM_ACPI} (\$root)`make_system_path_relative_to_its_root /boot/acpi/facp.dat`"
+	prepare_grub_to_access_device `${grub_probe} --target=device /boot/acpi` | sed -e "s/^/  /"
+	echo "acpi --exclude=dsdt,facp ${GRUB_CUSTOM_ACPI}"
+fi
+

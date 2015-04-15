@@ -1,0 +1,16 @@
+--- dsdt.dsl	2015-04-14 23:58:22.279863166 +0200
++++ dsdt.dsl	2015-04-15 00:00:02.279866641 +0200
+@@ -3922,11 +3922,11 @@
+                         {
+                             If (\_SB.PCI0.LPC.NFCD)
+                             {
+-                                Store (0x3600AE30, _HID) /* \_SB_.PCI0.LPC_.MOU_._HID */
++                                Store (0x0F20AE30, _HID) /* \_SB_.PCI0.LPC_.MOU_._HID */
+                             }
+                             Else
+                             {
+-                                Store (0x3900AE30, _HID) /* \_SB_.PCI0.LPC_.MOU_._HID */
++                                Store (0x4700AE30, _HID) /* \_SB_.PCI0.LPC_.MOU_._HID */
+                             }
+                         }
+                     }

@@ -1,0 +1,27 @@
+When retrofitting a new touchpad (with real buttons) into a machine
+of the clickpad-generation, the new touchpad is not fully supported
+as the PNP-ID of the old touchpad is hardcoded in the BIOS ACPI
+DSDT. Most drivers (Windows/Linux) will not change their behaviour
+on the synaptics board id alone.
+
+This tries to fix it by patching the system DSDT with the PNP ID
+of the touchpad from a T450s, which allows the respective driver
+to work on Windows and the synaptics-driver on Linux to correctly
+identify and handle the hardware buttons.
+
+The modified ACPI DSDT (an original FACP) is injected into the
+system by grub before loading any OS.
+
+This has only been tested on a Thinpad T440s retorfitted with a
+new touchpad, not on other models where this mod is also possible.
+Chances are high, that the patche against the dsdt does not
+apply and needs to be changed slightly.
+
+How to use:
+
+Running `make' will read the systems' DSDT table, decompile, patch
+and recompile it in the current directory.
+After that `make install' will put the modified dsdt.aml and original
+facp.dat into /boot/acpi/ and add a helper-script to /etc/grub.d/
+before calling update-grub.
+This will most likely only work on Debian based distributions.
